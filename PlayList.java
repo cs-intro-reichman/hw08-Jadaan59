@@ -50,7 +50,7 @@ class PlayList {
     public String toString() {
        String playList = "";
        for (int i = 0; i < size; i++){
-           playList = tracks[i].toString()
+           playList = tracks[i].toString();
                System.out.println();
        }
         return playList;
@@ -68,7 +68,7 @@ class PlayList {
     
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
-        int totalseconds;
+        int totalseconds = 0;
         for (int i = 0; i < size; i++){
             totalseconds +=  tracks[i].getDuration();
         }
@@ -150,8 +150,8 @@ class PlayList {
         if (this.size + other.size > this.maxSize){
             return;
         }
-        for (Track song : other){
-            add(song);
+        for (int i = 0; i < other.size; i++){
+            add(other.getTrack(i));
         }
     }
 
@@ -163,7 +163,7 @@ class PlayList {
      */
     private int minIndex(int start) {
       int shortestDuration = 0;
-      int indexOfMin;
+      int indexOfMin = 0;
        for (int i = start ; i < size;i++){
            int duration = tracks[i].getDuration();
            int compare = tracks[i+1].getDuration();
