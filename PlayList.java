@@ -97,13 +97,10 @@ class PlayList {
         if (size == maxSize || i > maxSize || i < 0){
             return false;
         }
-        if (size == 0){
+        if (size == 0 || i == size-1){
             add(track);
             return true;
-        }if (i == size-1) {
-            add(track);
-            return true;
-        }if (i < size && i > 0){
+        }if (i < size && i >= 0){
             for (int j = size; j > i; j--){
                 tracks[j] = tracks[j -1];
             }
@@ -162,24 +159,29 @@ class PlayList {
      *  If start is negative or greater than size - 1, returns -1.
      */
     private int minIndex(int start) {
-      int shortestDuration = 0;
-      int indexOfMin = 0;
-       for (int i = start ; i < size;i++){
-           int duration = tracks[i].getDuration();
-           int compare = tracks[i+1].getDuration();
-           if (duration <= compare){
-               shortestDuration = duration;
-           }
-           if (duration > compare){
-               shortestDuration = compare;
-           }
-       }
-       for ( int j = start; j < size; j++){
-           if (tracks[j].getDuration() == shortestDuration){
-               indexOfMin = j + start;
-           }
-       }
-        return indexOfMin;
+        if (start < 0 || start >= size) {
+            return -1;
+        }
+        if (size == 1) {
+            return 0;
+        }
+        else {
+            int shortestDuration = tracks[start].getDuration();
+            int indexOfMin = 0;
+            for (int i = start + 1; i < size; i++){
+                if (shortestDuration > tracks[i].getDuration()){
+                    shortestDuration = tracks[i].getDuration();
+                } else {
+                        shortestDuration = shortestDuration;
+                }
+            }
+            for (int j = start; j < size; j++) {
+                if (tracks[j].getDuration() == shortestDuration) {
+                    indexOfMin = j + start;
+                }
+            }
+            return indexOfMin;
+        }
     }
 
     /** Returns the title of the shortest track in this list. 
