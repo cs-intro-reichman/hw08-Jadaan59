@@ -50,7 +50,7 @@ class PlayList {
     public String toString() {
        String playList = "";
        for (int i = 0; i < size; i++){
-           playList = tracks[i].toString();
+           playList += tracks[i].toString();
                System.out.println();
        }
         return playList;
@@ -116,7 +116,7 @@ class PlayList {
         if (size == maxSize || i > maxSize || i < 0){
             return;
         }
-        if (i < size && i > 0){
+        if (i < size && i >= 0){
             for (int j = i; j < size ; j++){
                 tracks[j] = tracks[j+1];
             }
@@ -181,6 +181,9 @@ class PlayList {
     /** Returns the title of the shortest track in this list. 
      *  If the list is empty, returns null. */
     public String titleOfShortestTrack() {
+        if (size == 0){
+            return null;
+        }
         return tracks[minIndex(0)].getTitle();
     }
 
@@ -189,10 +192,13 @@ class PlayList {
      *  rather than returning a new, sorted playlist, the method sorts
      *  the list on which it was called (this list). */
     public void sortedInPlace() {
-        for (int i = 0; i < size; i++){
-            Track tempTrack = tracks[i];
-            tracks[i] = tracks[minIndex(i)];
-            tracks[minIndex(i)] = tempTrack;
+        for (int i = 0; i < size - 1; i++) {
+            int indexOfMin = minIndex(i);
+            if (i != indexOfMin) {
+                Track tempTrack = tracks[i];
+                tracks[i] = tracks[indexOfMin];
+                tracks[indexOfMin] = tempTrack;
+            }
         }
     }
 }
