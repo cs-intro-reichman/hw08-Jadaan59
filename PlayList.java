@@ -103,8 +103,8 @@ class PlayList {
         }else {
             for (int j = size; j > i; j--) {
                 tracks[j] = tracks[j - 1];
-                tracks[i] = track;
             }
+            tracks[i] = track;
         }
         return true;
     }
@@ -163,25 +163,20 @@ class PlayList {
         }
         if (size == 1) {
             return 0;
-        }
-        else {
-            int shortestDuration = tracks[start].getDuration();
-            int indexOfMin = 0;
-            for (int i = start + 1; i < size; i++){
-                if (shortestDuration > tracks[i].getDuration()){
-                    shortestDuration = tracks[i].getDuration();
-                } else {
-                        shortestDuration = shortestDuration;
-                }
-            }
-            for (int j = start; j < size; j++) {
-                if (tracks[j].getDuration() == shortestDuration) {
-                    indexOfMin = j + start;
+        } else {
+            int indexOfMin = start; // Initialize indexOfMin to start
+            for (int i = start + 1; i < size; i++) {
+                int currentDuration = tracks[i].getDuration();
+                int minDuration = tracks[indexOfMin].getDuration();
+
+                if (currentDuration < minDuration) {
+                    indexOfMin = i;
                 }
             }
             return indexOfMin;
         }
     }
+
 
     /** Returns the title of the shortest track in this list. 
      *  If the list is empty, returns null. */
